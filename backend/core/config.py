@@ -17,7 +17,7 @@ APP_VERSION='1.0.0'
 APP_DESCRIPTION='analyse resumes against job description using nlp + ml'
 
 ALLOWED_ORIGINS = [
-    ''
+    'https://ai-ats-resume-analyzer-3xusy3yaflwx9ndcjgrkid.streamlit.app/'
 ]  
 
 #file 

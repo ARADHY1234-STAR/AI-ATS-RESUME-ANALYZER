@@ -148,7 +148,7 @@ with st.sidebar:
         oauth = supabase_client.google_oauth_url()
         if "error" in oauth:
             st.caption(f"Google sign-in unavailable: {oauth['error']}")
-        else:
+        else:  
             st.link_button(
                 "Continue with Google",
                 url=oauth["url"],

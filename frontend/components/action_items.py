@@ -134,7 +134,7 @@ def display_action_items(analysis: Dict[str, Any]) -> None:
             f'<div class="ai-counter">{str(i + 1).zfill(2)}</div>'
             f'</div>'
         )
-
+    st.write(items_html)
     st.markdown(
         f'<div class="ai-wrap">'
         f'<span class="ai-label">// What to fix</span>'

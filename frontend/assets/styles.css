@@ -17,73 +17,34 @@ section[data-testid="stMain"] {
     background-color: #080808 !important;
 }
 
-/* everything else below... */
 :root {
-    /* Primary Colors */
-    --primary-color: #4F46E5;
-    --primary-hover: #4338CA;
-    --primary-light: #818CF8;
-    --primary-dark: #3730A3;
-    
-    /* Status Colors */
-    --success-color: #10B981;
-    --success-light: #34D399;
-    --success-dark: #059669;
-    --warning-color: #F59E0B;
-    --warning-light: #FBBF24;
-    --warning-dark: #D97706;
-    --danger-color: #EF4444;
-    --danger-light: #F87171;
-    --danger-dark: #DC2626;
-    --info-color: #3B82F6;
-    --info-light: #60A5FA;
-    --info-dark: #2563EB;
-    
-    /* Neutral Colors */
-    --text-primary: #1F2937;
-    --text-secondary: #6B7280;
-    --text-muted: #9CA3AF;
-    --background-light: #F9FAFB;
-    --background-white: #FFFFFF;
-    --border-color: #E5E7EB;
-    --border-light: #F3F4F6;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
-
-    /* Typography */
-    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
-    
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-full: 9999px;
-    
-    /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 300ms ease;
-    --transition-slower: 500ms ease;
+    --primary-color: #cc0000;
+    --primary-hover: #aa0000;
+    --primary-light: #ff3333;
+    --primary-dark: #990000;
+    --success-color: #22c55e;
+    --success-light: #4ade80;
+    --success-dark: #16a34a;
+    --warning-color: #f97316;
+    --warning-light: #fb923c;
+    --warning-dark: #ea580c;
+    --danger-color: #cc0000;
+    --danger-light: #ff3333;
+    --danger-dark: #990000;
+    --info-color: #3b82f6;
+    --info-light: #60a5fa;
+    --info-dark: #2563eb;
+    --text-primary: #f0f0f0;
+    --text-secondary: #888888;
+    --text-muted: #444444;
+    --background-light: #111111;
+    --background-white: #0d0d0d;
+    --border-color: rgba(255,255,255,0.07);
+    --border-light: rgba(255,255,255,0.04);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.5);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.6);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.7);
 }
 
 /* ============================================

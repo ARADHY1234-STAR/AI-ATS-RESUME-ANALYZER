@@ -1,3 +1,23 @@
+/* ── FORCE DARK THEME ── */
+.stApp {
+    background-color: #080808 !important;
+    background-image: none !important;
+}
+
+[data-testid="stAppViewContainer"] {
+    background-color: #080808 !important;
+}
+
+[data-testid="stSidebar"] {
+    background-color: #0d0d0d !important;
+    border-right: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+section[data-testid="stMain"] {
+    background-color: #080808 !important;
+}
+
+/* everything else below... */
 :root {
     /* Primary Colors */
     --primary-color: #4F46E5;

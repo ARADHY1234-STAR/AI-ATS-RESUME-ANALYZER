@@ -1,5 +1,13 @@
 import streamlit as st
-
+st.markdown("""
+<style>
+.block-container {
+    padding-top: 0 !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 def render():
     st.markdown("""

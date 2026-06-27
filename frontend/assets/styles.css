@@ -1725,3 +1725,24 @@ Animation utility classes */
 [data-testid="stSidebar"] span {
     color: #cccccc !important;
 }
+/* Fix white input fields */
+.stTextInput input,
+.stTextArea textarea,
+.stFileUploader,
+.stFileUploader label,
+[data-testid="stFileUploader"] {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Placeholder */
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder {
+    color: #9ca3af !important;
+}
+
+/* File uploader text */
+[data-testid="stFileUploader"] * {
+    color: #ffffff !important;
+}

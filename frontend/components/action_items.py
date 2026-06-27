@@ -1,3 +1,4 @@
+from textwrap import dedent
 from typing import Any, Dict, List, Tuple
 import streamlit as st
 
@@ -30,7 +31,7 @@ def display_action_items(analysis: Dict[str, Any]) -> None:
     if not items:
         return
 
-    st.markdown("""
+    st.markdown(dedent("""\
     <style>
     .ai-wrap {
         background: #0d0d0d;
@@ -113,32 +114,33 @@ def display_action_items(analysis: Dict[str, Any]) -> None:
         padding-top: 2px;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
     items_html = ""
     for i, (level, source, action) in enumerate(items):
         cfg = SEVERITY_CONFIG.get(level, SEVERITY_CONFIG["low"])
         color = cfg["color"]
         sev_label = cfg["label"]
-        items_html += f"""
-        <div class="ai-item">
-            <div class="ai-left">
-                <div class="ai-dot" style="background:{color}; box-shadow:0 0 6px {color}88;"></div>
-                <div class="ai-sev" style="color:{color};">{sev_label}</div>
-            </div>
-            <div class="ai-body">
-                <div class="ai-source" style="color:{color};">{source}</div>
-                <div class="ai-text">{action}</div>
-            </div>
-            <div class="ai-counter">{str(i + 1).zfill(2)}</div>
-        </div>
-        """
+        items_html += (
+            f'<div class="ai-item">'
+            f'<div class="ai-left">'
+            f'<div class="ai-dot" style="background:{color}; box-shadow:0 0 6px {color}88;"></div>'
+            f'<div class="ai-sev" style="color:{color};">{sev_label}</div>'
+            f'</div>'
+            f'<div class="ai-body">'
+            f'<div class="ai-source" style="color:{color};">{source}</div>'
+            f'<div class="ai-text">{action}</div>'
+            f'</div>'
+            f'<div class="ai-counter">{str(i + 1).zfill(2)}</div>'
+            f'</div>'
+        )
 
-    st.markdown(f"""
-    <div class="ai-wrap">
-        <span class="ai-label">// What to fix</span>
-        <div class="ai-title">Action items.</div>
-        <div class="ai-subtitle">Sorted by urgency — fix critical items first.</div>
-        {items_html}
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="ai-wrap">'
+        f'<span class="ai-label">// What to fix</span>'
+        f'<div class="ai-title">Action items.</div>'
+        f'<div class="ai-subtitle">Sorted by urgency — fix critical items first.</div>'
+        f'{items_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )

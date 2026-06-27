@@ -1,3 +1,4 @@
+from textwrap import dedent
 from typing import Any, Dict
 import streamlit as st
 from frontend.components._helpers import get_score_color, get_score_emoji
@@ -26,7 +27,7 @@ def display_overall_score(analysis: Dict[str, Any]) -> None:
         accent = "#cc0000"
         label = "NEEDS WORK"
 
-    st.markdown(f"""
+    st.markdown(dedent(f"""\
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Instrument+Serif:ital@0;1&display=swap');
     .score-wrap {{
@@ -94,21 +95,21 @@ def display_overall_score(analysis: Dict[str, Any]) -> None:
         opacity: 0.6;
     }}
     </style>
-
-    <div class="score-wrap">
-        <div class="score-tag">// ATS Score · {label}</div>
-        <span class="score-number" style="color:{accent}">{score:.0f}</span>
-        <span class="score-denom">OUT OF 100</span>
-        <div class="score-line"></div>
-        <p class="score-interp">{interpretation}</p>
-    </div>
-    """, unsafe_allow_html=True)
+    """)
+    + f'<div class="score-wrap">'
+      f'<div class="score-tag">// ATS Score \u00b7 {label}</div>'
+      f'<span class="score-number" style="color:{accent}">{score:.0f}</span>'
+      f'<span class="score-denom">OUT OF 100</span>'
+      f'<div class="score-line"></div>'
+      f'<p class="score-interp">{interpretation}</p>'
+      f'</div>',
+    unsafe_allow_html=True)
 
 
 def display_score_breakdown(analysis: Dict[str, Any]) -> None:
     component_scores = analysis.get("component_scores") or {}
 
-    st.markdown("""
+    st.markdown(dedent("""\
     <style>
     .breakdown-wrap {
         background: #0d0d0d;
@@ -185,25 +186,21 @@ def display_score_breakdown(analysis: Dict[str, Any]) -> None:
         min-width: 32px;
     }
     </style>
-
-    <div class="breakdown-wrap">
-        <span class="breakdown-label">// Dimensions</span>
-        <div class="breakdown-title">Score breakdown.</div>
-    """, unsafe_allow_html=True)
+    """)
+    + '<div class="breakdown-wrap"><span class="breakdown-label">// Dimensions</span><div class="breakdown-title">Score breakdown.</div>',
+    unsafe_allow_html=True)
 
     rows_html = ""
     for label, key, max_score, icon in COMPONENTS:
         value = float(component_scores.get(key, 0))
         pct = (value / max_score * 100) if max_score else 0
-        rows_html += f"""
-        <div class="comp-row">
-            <div class="comp-name">{icon} {label}</div>
-            <div class="comp-bar-wrap">
-                <div class="comp-bar" style="width:{pct}%"></div>
-            </div>
-            <div class="comp-score">{value:.0f}</div>
-            <div class="comp-max">/ {max_score}</div>
-        </div>
-        """
+        rows_html += (
+            f'<div class="comp-row">'
+            f'<div class="comp-name">{icon} {label}</div>'
+            f'<div class="comp-bar-wrap"><div class="comp-bar" style="width:{pct}%"></div></div>'
+            f'<div class="comp-score">{value:.0f}</div>'
+            f'<div class="comp-max">/ {max_score}</div>'
+            f'</div>'
+        )
 
     st.markdown(rows_html + "</div>", unsafe_allow_html=True)

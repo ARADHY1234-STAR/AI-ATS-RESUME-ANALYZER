@@ -1,9 +1,10 @@
+from textwrap import dedent
 from typing import Any, Dict, List
 import streamlit as st
 
 
 def display_strengths(strengths: List[str]) -> None:
-    st.markdown("""
+    st.markdown(dedent("""\
     <style>
     .str-wrap {
         background: #0d0d0d;
@@ -55,10 +56,7 @@ def display_strengths(strengths: List[str]) -> None:
         padding: 20px 0;
     }
     </style>
-    <div class="str-wrap">
-        <span class="str-label">// What's working</span>
-        <div class="str-title">Strengths.</div>
-    """, unsafe_allow_html=True)
+    """) + '<div class="str-wrap"><span class="str-label">// What\'s working</span><div class="str-title">Strengths.</div>', unsafe_allow_html=True)
 
     if not strengths:
         st.markdown('<div class="str-empty">Keep improving your resume to unlock strengths.</div>', unsafe_allow_html=True)
@@ -75,7 +73,7 @@ def display_critical_issues(analysis: Dict[str, Any]) -> None:
     critical = analysis.get("critical_issues") or []
     summary = analysis.get("issues_summary") or []
 
-    st.markdown("""
+    st.markdown(dedent("""\
     <style>
     .iss-wrap {
         background: #0d0d0d;
@@ -145,35 +143,38 @@ def display_critical_issues(analysis: Dict[str, Any]) -> None:
         gap: 10px;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
     if not critical and not summary:
-        st.markdown("""
-        <div class="iss-wrap">
-            <span class="iss-label">// Issues</span>
-            <div class="iss-title">Critical Issues.</div>
-            <div class="iss-success">✓ No critical issues found — your resume looks clean.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="iss-wrap">'
+            '<span class="iss-label">// Issues</span>'
+            '<div class="iss-title">Critical Issues.</div>'
+            '<div class="iss-success">\u2713 No critical issues found \u2014 your resume looks clean.</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
         return
 
     items_html = ""
     for item in critical:
         items_html += f'<div class="iss-item"><div class="iss-dot"></div><span>{item}</span></div>'
 
-    st.markdown(f"""
-    <div class="iss-wrap">
-        <span class="iss-label">// Fix these first</span>
-        <div class="iss-title">Critical Issues.</div>
-        <div class="iss-subtitle">Address these before applying — they hurt your ATS score the most.</div>
-        {items_html}
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="iss-wrap">'
+        f'<span class="iss-label">// Fix these first</span>'
+        f'<div class="iss-title">Critical Issues.</div>'
+        f'<div class="iss-subtitle">Address these before applying \u2014 they hurt your ATS score the most.</div>'
+        f'{items_html}'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
     extra = [s for s in summary if s not in critical]
     if extra:
         with st.expander("Additional flagged items", expanded=False):
             for item in extra:
-                st.markdown(f"""
-                <div class="iss-item"><div class="iss-dot"></div><span>{item}</span></div>
-                """, unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="iss-item"><div class="iss-dot"></div><span>{item}</span></div>',
+                    unsafe_allow_html=True,
+                )

@@ -1,3 +1,4 @@
+from textwrap import dedent
 from typing import Any, Dict
 import streamlit as st
 
@@ -9,7 +10,7 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
     total = details.get("total", len(validated) + len(unvalidated))
     pct = details.get("validation_pct", 0.0)
 
-    st.markdown("""
+    st.markdown(dedent("""\
     <style>
     .sv-wrap {
         background: #0d0d0d;
@@ -127,43 +128,34 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
         padding: 20px 0;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """), unsafe_allow_html=True)
 
     if total == 0:
-        st.markdown("""
-        <div class="sv-wrap">
-            <span class="sv-label">// Skill Validation</span>
-            <div class="sv-title">Skills.</div>
-            <div class="sv-empty">No skills detected on the resume.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            '<div class="sv-wrap">'
+            '<span class="sv-label">// Skill Validation</span>'
+            '<div class="sv-title">Skills.</div>'
+            '<div class="sv-empty">No skills detected on the resume.</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
         return
 
     pct_clamped = min(max(pct, 0), 100)
 
-    st.markdown(f"""
-    <div class="sv-wrap">
-        <span class="sv-label">// Skill Validation</span>
-        <div class="sv-title">Skills.</div>
-        <div class="sv-stats">
-            <div class="sv-stat">
-                <span class="sv-stat-val">{total}</span>
-                <span class="sv-stat-lbl">Total Skills</span>
-            </div>
-            <div class="sv-stat">
-                <span class="sv-stat-val">{len(validated)}</span>
-                <span class="sv-stat-lbl">Validated</span>
-            </div>
-            <div class="sv-stat">
-                <span class="sv-stat-val">{pct:.0f}<span style="font-size:20px;color:#444">%</span></span>
-                <span class="sv-stat-lbl">Match Rate</span>
-            </div>
-        </div>
-        <div class="sv-bar-wrap">
-            <div class="sv-bar" style="width:{pct_clamped}%"></div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="sv-wrap">'
+        f'<span class="sv-label">// Skill Validation</span>'
+        f'<div class="sv-title">Skills.</div>'
+        f'<div class="sv-stats">'
+        f'<div class="sv-stat"><span class="sv-stat-val">{total}</span><span class="sv-stat-lbl">Total Skills</span></div>'
+        f'<div class="sv-stat"><span class="sv-stat-val">{len(validated)}</span><span class="sv-stat-lbl">Validated</span></div>'
+        f'<div class="sv-stat"><span class="sv-stat-val">{pct:.0f}<span style="font-size:20px;color:#444">%</span></span><span class="sv-stat-lbl">Match Rate</span></div>'
+        f'</div>'
+        f'<div class="sv-bar-wrap"><div class="sv-bar" style="width:{pct_clamped}%"></div></div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
     if validated:
         with st.expander(f"Validated skills ({len(validated)})", expanded=False):
@@ -175,14 +167,15 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
                 similarity = entry.get("similarity")
                 project_text = ", ".join(projects[:3]) if projects else "experience section"
                 sim_text = f" · {similarity * 100:.0f}% match" if isinstance(similarity, (int, float)) else ""
-                items_html += f"""
-                <div class="sv-skill-item">
-                    <div class="sv-dot-green"></div>
-                    <div>
-                        <div class="sv-skill-name">{skill}{sim_text}</div>
-                        <div class="sv-skill-meta">Found in: {project_text}</div>
-                    </div>
-                </div>"""
+                items_html += (
+                    f'<div class="sv-skill-item">'
+                    f'<div class="sv-dot-green"></div>'
+                    f'<div>'
+                    f'<div class="sv-skill-name">{skill}{sim_text}</div>'
+                    f'<div class="sv-skill-meta">Found in: {project_text}</div>'
+                    f'</div>'
+                    f'</div>'
+                )
             st.markdown(items_html, unsafe_allow_html=True)
 
     if unvalidated:
@@ -190,9 +183,10 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
             st.markdown('<span class="sv-section-title">// Not tied to any project or experience</span>', unsafe_allow_html=True)
             items_html = ""
             for skill in unvalidated:
-                items_html += f"""
-                <div class="sv-skill-item">
-                    <div class="sv-dot-red"></div>
-                    <div class="sv-skill-name">{skill}</div>
-                </div>"""
+                items_html += (
+                    f'<div class="sv-skill-item">'
+                    f'<div class="sv-dot-red"></div>'
+                    f'<div class="sv-skill-name">{skill}</div>'
+                    f'</div>'
+                )
             st.markdown(items_html, unsafe_allow_html=True)

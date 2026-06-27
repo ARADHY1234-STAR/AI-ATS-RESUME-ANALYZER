@@ -214,6 +214,8 @@ def render() -> None:
                 access_token=access_token,
                 job_description=job_description,
             )
+            st.subheader("DEBUG")
+            st.json(analysis["detailed_feedback"])
     except requests.RequestException as exc:
         _show_backend_error(exc)
         return

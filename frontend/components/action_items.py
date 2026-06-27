@@ -1,6 +1,8 @@
+from re import escape
 from textwrap import dedent
 from typing import Any, Dict, List, Tuple
 import streamlit as st
+from html import escape
 
 SEVERITY_RANK = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 
@@ -129,7 +131,7 @@ def display_action_items(analysis: Dict[str, Any]) -> None:
             f'</div>'
             f'<div class="ai-body">'
             f'<div class="ai-source" style="color:{color};">{source}</div>'
-            f'<div class="ai-text">{action}</div>'
+            f'<div class="ai-text">{escape(str(action))}</div>'
             f'</div>'
             f'<div class="ai-counter">{str(i + 1).zfill(2)}</div>'
             f'</div>'

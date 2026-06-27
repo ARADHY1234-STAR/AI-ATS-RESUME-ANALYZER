@@ -68,76 +68,83 @@ def _render_issue(issue: Dict[str, Any], idx: int) -> None:
         unsafe_allow_html=True,
     )
 
-    with st.expander("View details", expanded=False):
-        st.markdown(
-            f'<style>'
-            f'.df-detail-block {{'
-            f'background: #0a0a0a;'
-            f'border: 1px solid rgba(255,255,255,0.05);'
-            f'padding: 20px 24px;'
-            f'}}'
-            f'.df-field-label {{'
-            f"font-family: 'Inter', sans-serif;"
-            f'font-size: 9px;'
-            f'font-weight: 700;'
-            f'letter-spacing: 0.18em;'
-            f'text-transform: uppercase;'
-            f'color: {color};'
-            f'margin-bottom: 6px;'
-            f'display: block;'
-            f'}}'
-            f'.df-field-body {{'
-            f"font-family: 'Inter', sans-serif;"
-            f'font-size: 13px;'
-            f'color: #888;'
-            f'line-height: 1.7;'
-            f'margin-bottom: 20px;'
-            f'}}'
-            f'.df-action-item {{'
-            f'display: flex;'
-            f'align-items: flex-start;'
-            f'gap: 10px;'
-            f'padding: 8px 0;'
-            f'border-bottom: 1px solid rgba(255,255,255,0.04);'
-            f"font-family: 'Inter', sans-serif;"
-            f'font-size: 13px;'
-            f'color: #888;'
-            f'}}'
-            f'.df-action-item:last-child {{ border-bottom: none; }}'
-            f'.df-action-dot {{'
-            f'width: 5px; height: 5px;'
-            f'border-radius: 50%;'
-            f'background: {color};'
-            f'flex-shrink: 0;'
-            f'margin-top: 7px;'
-            f'}}'
-            f'</style>'
-            f'<div class="df-detail-block">',
-            unsafe_allow_html=True,
-        )
+   with st.expander("View details", expanded=False):
+    blocks = f"""
+    <style>
+    .df-detail-block {{
+        background: #0a0a0a;
+        border: 1px solid rgba(255,255,255,0.05);
+        padding: 20px 24px;
+    }}
+    .df-field-label {{
+        font-family: 'Inter', sans-serif;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: {color};
+        margin-bottom: 6px;
+        display: block;
+    }}
+    .df-field-body {{
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        color: #888;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }}
+    .df-action-item {{
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        padding:8px 0;
+        border-bottom:1px solid rgba(255,255,255,0.04);
+        font-family:'Inter',sans-serif;
+        font-size:13px;
+        color:#888;
+    }}
+    .df-action-item:last-child {{
+        border-bottom:none;
+    }}
+    .df-action-dot {{
+        width:5px;
+        height:5px;
+        border-radius:50%;
+        background:{color};
+        flex-shrink:0;
+        margin-top:7px;
+    }}
+    </style>
 
-        blocks = ""
-        if explanation:
-            blocks += f'<span class="df-field-label">// What\'s happening</span><div class="df-field-body">{explanation}</div>'
-        if where:
-            blocks += f'<span class="df-field-label">// Where it appears</span><div class="df-field-body">{where}</div>'
-        if how_to_fix:
-            blocks += f'<span class="df-field-label">// How to fix</span><div class="df-field-body">{how_to_fix}</div>'
+    <div class="df-detail-block">
+    """
 
-        if blocks:
-            st.markdown(blocks + "</div>", unsafe_allow_html=True)
+    if explanation:
+        blocks += f'<span class="df-field-label">// What\'s happening</span><div class="df-field-body">{explanation}</div>'
 
-        if action_items:
-            st.markdown('<span class="df-field-label">// Action items</span>', unsafe_allow_html=True)
-            items_html = ""
-            for item in action_items:
-                items_html += f'<div class="df-action-item"><div class="df-action-dot"></div><span>{item}</span></div>'
-            st.markdown(items_html, unsafe_allow_html=True)
+    if where:
+        blocks += f'<span class="df-field-label">// Where it appears</span><div class="df-field-body">{where}</div>'
 
-        if example:
-            st.markdown('<span class="df-field-label">// Example improvement</span>', unsafe_allow_html=True)
-            st.code(example, language="text")
+    if how_to_fix:
+        blocks += f'<span class="df-field-label">// How to fix</span><div class="df-field-body">{how_to_fix}</div>'
 
+    if action_items:
+        blocks += '<span class="df-field-label">// Action items</span>'
+        for item in action_items:
+            blocks += f'''
+            <div class="df-action-item">
+                <div class="df-action-dot"></div>
+                <span>{item}</span>
+            </div>
+            '''
+
+    blocks += "</div>"
+
+    st.markdown(blocks, unsafe_allow_html=True)
+
+    if example:
+        st.markdown('<span class="df-field-label">// Example improvement</span>', unsafe_allow_html=True)
+        st.code(example, language="text")
 
 def display_detailed_feedback(analysis: Dict[str, Any]) -> None:
     issues = analysis.get("detailed_feedback") or []

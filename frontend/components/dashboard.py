@@ -40,8 +40,8 @@ def display_results_dashboard(analysis: Dict[str, Any]) -> None:
         display_jd_comparison(jd_comparison)
         st.markdown("---")
 
-    display_detailed_feedback(analysis)
-    st.markdown("---")
+    #display_detailed_feedback(analysis)
+    #st.markdown("---")
 
     display_action_items(analysis)
     st.markdown("---")

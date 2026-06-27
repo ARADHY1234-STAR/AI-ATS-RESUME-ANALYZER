@@ -67,85 +67,77 @@ def _render_issue(issue: Dict[str, Any], idx: int) -> None:
         + '</div>',
         unsafe_allow_html=True,
     )
+
     with st.expander("View details", expanded=False):
+        st.markdown(
+            f'<style>'
+            f'.df-detail-block {{'
+            f'background: #0a0a0a;'
+            f'border: 1px solid rgba(255,255,255,0.05);'
+            f'padding: 20px 24px;'
+            f'}}'
+            f'.df-field-label {{'
+            f"font-family: 'Inter', sans-serif;"
+            f'font-size: 9px;'
+            f'font-weight: 700;'
+            f'letter-spacing: 0.18em;'
+            f'text-transform: uppercase;'
+            f'color: {color};'
+            f'margin-bottom: 6px;'
+            f'display: block;'
+            f'}}'
+            f'.df-field-body {{'
+            f"font-family: 'Inter', sans-serif;"
+            f'font-size: 13px;'
+            f'color: #888;'
+            f'line-height: 1.7;'
+            f'margin-bottom: 20px;'
+            f'}}'
+            f'.df-action-item {{'
+            f'display: flex;'
+            f'align-items: flex-start;'
+            f'gap: 10px;'
+            f'padding: 8px 0;'
+            f'border-bottom: 1px solid rgba(255,255,255,0.04);'
+            f"font-family: 'Inter', sans-serif;"
+            f'font-size: 13px;'
+            f'color: #888;'
+            f'}}'
+            f'.df-action-item:last-child {{ border-bottom: none; }}'
+            f'.df-action-dot {{'
+            f'width: 5px; height: 5px;'
+            f'border-radius: 50%;'
+            f'background: {color};'
+            f'flex-shrink: 0;'
+            f'margin-top: 7px;'
+            f'}}'
+            f'</style>'
+            f'<div class="df-detail-block">',
+            unsafe_allow_html=True,
+        )
 
-        html = f"""
-        <style>
-        .df-detail-block {{
-            background:#0a0a0a;
-            border:1px solid rgba(255,255,255,.05);
-            padding:20px 24px;
-        }}
-        .df-field-label {{
-            color:{color};
-            font-size:9px;
-            font-weight:700;
-            letter-spacing:.18em;
-            text-transform:uppercase;
-            display:block;
-            margin:18px 0 6px;
-        }}
-        .df-field-body {{
-            color:#888;
-            font-size:13px;
-            line-height:1.7;
-        }}
-        .df-action-item {{
-            display:flex;
-            gap:10px;
-            padding:8px 0;
-        }}
-        .df-action-dot {{
-            width:5px;
-            height:5px;
-            border-radius:50%;
-            background:{color};
-            margin-top:7px;
-            flex-shrink:0;
-        }}
-        </style>
-
-        <div class="df-detail-block">
-        """
-
+        blocks = ""
         if explanation:
-            html += f"""
-            <span class="df-field-label">// What's happening</span>
-            <div class="df-field-body">{explanation}</div>
-            """
-
+            blocks += f'<span class="df-field-label">// What\'s happening</span><div class="df-field-body">{explanation}</div>'
         if where:
-            html += f"""
-            <span class="df-field-label">// Where it appears</span>
-            <div class="df-field-body">{where}</div>
-            """
-
+            blocks += f'<span class="df-field-label">// Where it appears</span><div class="df-field-body">{where}</div>'
         if how_to_fix:
-            html += f"""
-            <span class="df-field-label">// How to fix</span>
-            <div class="df-field-body">{how_to_fix}</div>
-            """
+            blocks += f'<span class="df-field-label">// How to fix</span><div class="df-field-body">{how_to_fix}</div>'
+
+        if blocks:
+            st.markdown(blocks + "</div>", unsafe_allow_html=True)
 
         if action_items:
-            html += """
-            <span class="df-field-label">// Action Items</span>
-            """
-
+            st.markdown('<span class="df-field-label">// Action items</span>', unsafe_allow_html=True)
+            items_html = ""
             for item in action_items:
-                html += f"""
-                <div class="df-action-item">
-                    <div class="df-action-dot"></div>
-                    <div>{item}</div>
-                </div>
-                """
-
-        html += "</div>"
-
-        st.markdown(html, unsafe_allow_html=True)
+                items_html += f'<div class="df-action-item"><div class="df-action-dot"></div><span>{item}</span></div>'
+            st.markdown(items_html, unsafe_allow_html=True)
 
         if example:
-            st.markdown("#### Example Improvement")
-            st.code(example)
+            st.markdown('<span class="df-field-label">// Example improvement</span>', unsafe_allow_html=True)
+            st.code(example, language="text")
+
 
 def display_detailed_feedback(analysis: Dict[str, Any]) -> None:
     issues = analysis.get("detailed_feedback") or []
